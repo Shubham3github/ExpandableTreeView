@@ -1,34 +1,30 @@
-//
 //  ViewController.m
 //  ExpandableTreeView
-//
 //  Created by Vaishali on 12/5/17.
 //  Copyright © 2017 VaishaliApp. All rights reserved.
-//
 
 #import "ViewController.h"
 
 @interface ViewController ()
 
-
-
 @end
 
 @implementation ViewController
 
-@synthesize tableView;
-@synthesize mutableArray;
-@synthesize arrayfortable;
+//@synthesize tableView=_tableView;
+//@synthesize mutableArray=_mutableArray;
+//@synthesize arrayfortable=_arrayfortable;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    NSDictionary *dict = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Categories" ofType:@"plist"]];
-    self.arrayfortable = [dict valueForKey:@"Objects"];
+    NSDictionary *dict = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"data" ofType:@"plist"]];
+    self.arrayOriginal = [dict valueForKey:@"Objects"];
     self.mutableArray = [[NSMutableArray alloc] init];
-    [self.mutableArray addObjectsFromArray:self.arrayfortable];
+    [self.mutableArray addObjectsFromArray:self.arrayOriginal];
+    NSLog(@"mutableArray");
     self.title=@"Expandable/Collapsable Tree View";
-
+    
 }
 
 //---------Customize the number of sections in the table view-----------//
@@ -49,7 +45,8 @@
 {
     static NSString *CellIdentifier = @"Cell";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+ UITableViewCell *cell =[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
     if (cell == nil)
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] ;
@@ -57,7 +54,6 @@
     
     cell.textLabel.text=[[self.mutableArray objectAtIndex:indexPath.row] valueForKey:@"name"];
     [cell setIndentationLevel:[[[self.mutableArray objectAtIndex:indexPath.row] valueForKey:@"level"] intValue]];
-    
     return cell;
 }
 
@@ -72,9 +68,9 @@
         
         BOOL isAlreadyInserted=NO;
         
-        for(NSDictionary *abc in ar )
+        for(NSDictionary *dInner in ar)
         {
-            NSInteger index=[self.mutableArray indexOfObjectIdenticalTo:abc];
+            NSInteger index=[self.mutableArray indexOfObjectIdenticalTo:dInner];
             isAlreadyInserted=(index>0 && index!=NSIntegerMax);
             if(isAlreadyInserted)
                 break;
@@ -88,35 +84,32 @@
         {
            NSUInteger count=indexPath.row+1;
             NSMutableArray *arCells=[NSMutableArray array];
-            for(NSDictionary *def in ar ) {
+            for(NSDictionary *abc in ar ) {
                 [arCells addObject:[NSIndexPath indexPathForRow:count inSection:0]];
-                [self.mutableArray insertObject:def atIndex:count++];
+                [self.mutableArray insertObject:abc atIndex:count++];
         }
-            [tableView insertRowsAtIndexPaths:arCells withRowAnimation:UITableViewRowAnimationLeft];
+        [tableView insertRowsAtIndexPaths:arCells withRowAnimation:UITableViewRowAnimationLeft];
         }
     }
 }
 -(void)miniMizeThisRows:(NSArray*)ar{
     
-    for(NSDictionary *dInner in ar ) {
-        NSUInteger indexToRemove=[self.mutableArray indexOfObjectIdenticalTo:dInner];
-        NSArray *arInner=[dInner valueForKey:@"Objects"];
-        if(arInner && [arInner count]>0){
-            [self miniMizeThisRows:arInner];
+    for(NSDictionary *abc in ar ) {
+        NSUInteger indexToRemove=[self.mutableArray indexOfObjectIdenticalTo:abc];
+        NSArray *def=[abc valueForKey:@"Objects"];
+        if(def && [def count]>0){
+            [self miniMizeThisRows:def];
         }
         
-        if([self.mutableArray indexOfObjectIdenticalTo:dInner]!=NSNotFound) {
-            [self.mutableArray removeObjectIdenticalTo:dInner];
-            [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:
+        if ([self.mutableArray indexOfObjectIdenticalTo:abc]!=NSNotFound) {
+            [self.mutableArray removeObjectIdenticalTo:abc];
+            [self.tabelView deleteRowsAtIndexPaths:[NSArray arrayWithObject:
                                                          [NSIndexPath indexPathForRow:indexToRemove inSection:0]
                                                          ]
                                        withRowAnimation:UITableViewRowAnimationRight];
         }
     }
 }
-
-
-
 
 
 

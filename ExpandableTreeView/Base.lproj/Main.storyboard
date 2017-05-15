@@ -19,25 +19,47 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="YHv-DJ-smw">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="0.0" y="0.0" width="400" height="600"/>
-                                </variation>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="DMl-Hk-F7X"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="i2D-gW-Kuc"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="YHv-DJ-smw" secondAttribute="bottom" id="50L-iw-csN"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="YHv-DJ-smw" secondAttribute="bottom" id="Soe-nW-caS"/>
+                            <constraint firstItem="YHv-DJ-smw" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="nug-Uc-cbb"/>
+                            <constraint firstAttribute="trailing" secondItem="YHv-DJ-smw" secondAttribute="trailing" id="ur8-j4-U5m"/>
+                            <constraint firstItem="YHv-DJ-smw" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="vOM-yj-Bgg"/>
+                        </constraints>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="YHv-DJ-smw"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="nug-Uc-cbb"/>
+                                <exclude reference="ur8-j4-U5m"/>
+                                <exclude reference="vOM-yj-Bgg"/>
+                                <exclude reference="50L-iw-csN"/>
+                                <exclude reference="Soe-nW-caS"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
                             <mask key="subviews">
                                 <include reference="YHv-DJ-smw"/>
                             </mask>
+                            <mask key="constraints">
+                                <include reference="nug-Uc-cbb"/>
+                                <include reference="ur8-j4-U5m"/>
+                                <include reference="vOM-yj-Bgg"/>
+                                <include reference="50L-iw-csN"/>
+                                <include reference="Soe-nW-caS"/>
+                            </mask>
                         </variation>
                     </view>
                     <connections>
-                        <outlet property="tableView" destination="YHv-DJ-smw" id="ga7-CX-R5C"/>
+                        <outlet property="tabelView" destination="YHv-DJ-smw" id="icd-f4-7wW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
