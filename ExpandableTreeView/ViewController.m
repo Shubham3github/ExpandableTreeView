@@ -33,6 +33,12 @@
 {
     return 1;
 }
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+
+return @"Expandable/Collapsable TableView";
+
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -56,7 +62,6 @@
     [cell setIndentationLevel:[[[self.mutableArray objectAtIndex:indexPath.row] valueForKey:@"level"] intValue]];
     return cell;
 }
-
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
